@@ -8,14 +8,15 @@ import hello.core.member.model.Grade;
 import hello.core.member.model.Member;
 import hello.core.member.service.MemberService;
 import hello.core.member.service.impl.MemberServiceImpl;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class OrderApp {
 
     public static void main(String[] args) {
-        AppConfig config = new AppConfig();
-
-        MemberService memberService = config.memberService();
-        OrderService orderService = config.orderService();
+        ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+        MemberService memberService = ac.getBean("memberService", MemberService.class);
+        OrderService orderService = ac.getBean("orderService", OrderService.class);
 
         Long memberId = 1L;
         Member memberA = new Member(memberId, "memberA", Grade.VIP);
